@@ -1,3 +1,5 @@
+const API = "http://127.0.0.1:8000";
+
 const teams = [
     "Sunrisers Hyderabad",
     "Royal Challengers Bangalore",
@@ -9,99 +11,120 @@ const teams = [
     "Delhi Daredevils"
 ];
 
-// Load teams into all dropdowns
-function loadTeams() {
-    let ids = ["team1", "team2", "toss_winner", "teamStats", "c1", "c2"];
+const decisions = ["bat", "field"];
 
-    ids.forEach(id => {
-        let select = document.getElementById(id);
-        select.innerHTML = "";
+// team suggestions
+function showSuggestions(input) {
+    let box = input.parentElement.querySelector(".suggestions");
+    let value = input.value.toLowerCase();
 
-        teams.forEach(team => {
-            let option = document.createElement("option");
-            option.value = team;
-            option.text = team;
-            select.appendChild(option);
-        });
+    box.innerHTML = "";
+
+    let filtered = teams.filter(t => t.toLowerCase().includes(value));
+
+    filtered.forEach(t => {
+        let div = document.createElement("div");
+        div.innerText = t;
+        div.onclick = () => {
+            input.value = t;
+            box.style.display = "none";
+        };
+        box.appendChild(div);
     });
+
+    box.style.display = "block";
 }
 
-// 🔥 Sync toss winner with selected teams
-function syncTossWinner() {
-    let team1 = document.getElementById("team1").value;
-    let team2 = document.getElementById("team2").value;
-    let toss = document.getElementById("toss_winner");
+// dropdown click
+function toggleDropdown(btn) {
+    let box = btn.parentElement.querySelector(".suggestions");
+    let input = btn.parentElement.querySelector("input");
 
-    toss.innerHTML = "";
+    box.innerHTML = "";
 
-    [team1, team2].forEach(team => {
-        let option = document.createElement("option");
-        option.value = team;
-        option.text = team;
-        toss.appendChild(option);
+    teams.forEach(t => {
+        let div = document.createElement("div");
+        div.innerText = t;
+        div.onclick = () => {
+            input.value = t;
+            box.style.display = "none";
+        };
+        box.appendChild(div);
     });
+
+    box.style.display = "block";
 }
 
-// 🎯 Predict match
-async function predict() {
-    let data = {
-        team1: document.getElementById("team1").value,
-        team2: document.getElementById("team2").value,
-        toss_winner: document.getElementById("toss_winner").value,
-        toss_decision: document.getElementById("toss_decision").value
-    };
+// decision suggestions
+function showDecision(input) {
+    let box = input.parentElement.querySelector(".suggestions");
 
-    try {
-        let res = await fetch("http://127.0.0.1:8000/predict", {
-            method: "POST",
-            headers: {"Content-Type": "application/json"},
-            body: JSON.stringify(data)
-        });
+    box.innerHTML = "";
 
-        let result = await res.json();
+    decisions.forEach(d => {
+        let div = document.createElement("div");
+        div.innerText = d;
+        div.onclick = () => {
+            input.value = d;
+            box.style.display = "none";
+        };
+        box.appendChild(div);
+    });
 
-        document.getElementById("result").innerText =
-            `🏆 ${result.winner} (${result.probability}%)`;
-
-    } catch (err) {
-        console.log(err);
-        alert("Backend not connected ❌");
-    }
+    box.style.display = "block";
 }
 
-// 📊 Get stats
-async function getStats() {
-    let team = document.getElementById("teamStats").value;
+function toggleDecision(btn) {
+    let box = btn.parentElement.querySelector(".suggestions");
+    let input = btn.parentElement.querySelector("input");
 
-    try {
-        let res = await fetch(`http://127.0.0.1:8000/team-stats/${team}`);
-        let data = await res.json();
+    box.innerHTML = "";
 
-        document.getElementById("statsResult").innerText =
-            `Matches: ${data.matches}, Wins: ${data.wins}, Win%: ${data.win_percentage}%`;
+    decisions.forEach(d => {
+        let div = document.createElement("div");
+        div.innerText = d;
+        div.onclick = () => {
+            input.value = d;
+            box.style.display = "none";
+        };
+        box.appendChild(div);
+    });
 
-    } catch (err) {
-        alert("Error fetching stats");
-    }
+    box.style.display = "block";
 }
 
-// ⚔️ Compare teams
-async function compare() {
-    let t1 = document.getElementById("c1").value;
-    let t2 = document.getElementById("c2").value;
+// Predict
+document.getElementById("predictBtn").onclick = async () => {
+    let res = await fetch(API + "/predict", {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({
+            team1: team1.value,
+            team2: team2.value,
+            toss_winner: toss_winner.value,
+            toss_decision: toss_decision.value
+        })
+    });
 
-    try {
-        let res = await fetch(`http://127.0.0.1:8000/compare?team1=${t1}&team2=${t2}`);
-        let data = await res.json();
+    let data = await res.json();
 
-        document.getElementById("compareResult").innerText =
-            `${t1}: ${data.team1_wins} wins | ${t2}: ${data.team2_wins} wins`;
+    result.innerText = `🏆 ${data.winner} (${data.probability}%)`;
+};
 
-    } catch (err) {
-        alert("Error comparing teams");
-    }
-}
+// Stats
+document.getElementById("statsBtn").onclick = async () => {
+    let res = await fetch(API + "/team-stats/" + teamStats.value);
+    let data = await res.json();
 
-// Load everything
-loadTeams();
-syncTossWinner();
+    statsResult.innerText =
+        `Matches: ${data.matches}, Wins: ${data.wins}, Win%: ${data.win_percentage}%`;
+};
+
+// Compare
+document.getElementById("compareBtn").onclick = async () => {
+    let res = await fetch(API + `/compare?team1=${c1.value}&team2=${c2.value}`);
+    let data = await res.json();
+
+    compareResult.innerText =
+        `${c1.value}: ${data.team1_wins} | ${c2.value}: ${data.team2_wins}`;
+};

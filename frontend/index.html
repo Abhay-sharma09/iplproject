@@ -6,55 +6,91 @@
 </head>
 <body>
 
-<h1>🏏 IPL Advanced Dashboard</h1>
-
 <div class="container">
 
-    <!-- 🔥 MATCH PREDICTOR -->
+    <h1>🏏 IPL Predictor Dashboard</h1>
+
+    <!-- MATCH PREDICTOR -->
     <div class="card">
         <h2>Match Predictor</h2>
 
-        <label>Team 1</label>
-        <select id="team1" onchange="syncTossWinner()"></select>
+        <div class="form-row">
 
-        <label>Team 2</label>
-        <select id="team2" onchange="syncTossWinner()"></select>
+            <div class="input-box">
+                <input id="team1" placeholder="Team 1" onkeyup="showSuggestions(this)">
+                <span class="dropdown-btn" onclick="toggleDropdown(this)">▼</span>
+                <div class="suggestions"></div>
+            </div>
 
-        <label>Who won the Toss?</label>
-        <select id="toss_winner"></select>
+            <div class="input-box">
+                <input id="team2" placeholder="Team 2" onkeyup="showSuggestions(this)">
+                <span class="dropdown-btn" onclick="toggleDropdown(this)">▼</span>
+                <div class="suggestions"></div>
+            </div>
 
-        <label>Toss Decision</label>
-        <select id="toss_decision">
-            <option value="bat">Bat First</option>
-            <option value="field">Field First</option>
-        </select>
+        </div>
 
-        <button onclick="predict()">Predict Winner</button>
+        <div class="form-row">
 
-        <h3 id="result">Result will appear here</h3>
+            <div class="input-box">
+                <input id="toss_winner" placeholder="Toss Winner" onkeyup="showSuggestions(this)">
+                <span class="dropdown-btn" onclick="toggleDropdown(this)">▼</span>
+                <div class="suggestions"></div>
+            </div>
+
+            <div class="input-box">
+                <input id="toss_decision" placeholder="bat / field" onkeyup="showDecision(this)">
+                <span class="dropdown-btn" onclick="toggleDecision(this)">▼</span>
+                <div class="suggestions"></div>
+            </div>
+
+        </div>
+
+        <button class="btn" id="predictBtn">Predict</button>
+        <p id="result"></p>
     </div>
 
-    <!-- 📊 TEAM STATS -->
+    <!-- TEAM STATS -->
     <div class="card">
         <h2>Team Stats</h2>
 
-        <select id="teamStats"></select>
+        <div class="form-row">
 
-        <button onclick="getStats()">Get Stats</button>
+            <div class="input-box">
+                <input id="teamStats" placeholder="Team Name" onkeyup="showSuggestions(this)">
+                <span class="dropdown-btn" onclick="toggleDropdown(this)">▼</span>
+                <div class="suggestions"></div>
+            </div>
 
-        <p id="statsResult">Stats will appear here</p>
+            <button class="btn" id="statsBtn">Get Stats</button>
+
+        </div>
+
+        <p id="statsResult"></p>
     </div>
 
-    <!-- ⚔️ TEAM COMPARISON -->
+    <!-- TEAM COMPARISON -->
     <div class="card">
         <h2>Team Comparison</h2>
 
-        <select id="c1"></select>
-        <select id="c2"></select>
+        <div class="form-row">
 
-        <button onclick="compare()">Compare</button>
+            <div class="input-box">
+                <input id="c1" placeholder="Team 1" onkeyup="showSuggestions(this)">
+                <span class="dropdown-btn" onclick="toggleDropdown(this)">▼</span>
+                <div class="suggestions"></div>
+            </div>
 
-        <p id="compareResult">Comparison will appear here</p>
+            <div class="input-box">
+                <input id="c2" placeholder="Team 2" onkeyup="showSuggestions(this)">
+                <span class="dropdown-btn" onclick="toggleDropdown(this)">▼</span>
+                <div class="suggestions"></div>
+            </div>
+
+        </div>
+
+        <button class="btn" id="compareBtn">Compare</button>
+        <p id="compareResult"></p>
     </div>
 
 </div>

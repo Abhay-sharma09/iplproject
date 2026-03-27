@@ -1,96 +1,114 @@
 body {
     margin: 0;
-    font-family: 'Segoe UI', sans-serif;
-    background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
-    color: white;
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(135deg, #0b0217, #1a0033, #020617);
+    color: #e2e8f0;
 }
 
-/* Title */
+/* Container */
+.container {
+    width: 70%;              /* 🔥 reduce width */
+    margin: auto;
+    padding: 30px 0;
+}
+
+/* Heading */
 h1 {
     text-align: center;
-    padding: 20px;
-    font-size: 2.2rem;
-    letter-spacing: 1px;
-}
-
-/* Layout */
-.container {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
+    font-size: 34px;
+    margin-bottom: 40px;
+    color: #ffffff;
+    text-shadow: 0 0 6px rgba(168, 85, 247, 0.6);
 }
 
 /* Card */
 .card {
-    background: rgba(255, 255, 255, 0.08);
+    background: rgba(55, 20, 90, 0.75);
     backdrop-filter: blur(12px);
-    margin: 20px;
-    padding: 20px;
-    width: 320px;
+    padding: 30px;
+    margin: 30px 0;
     border-radius: 16px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.6);
-    transition: 0.4s;
+    border: 1px solid rgba(168, 85, 247, 0.25);
+}
+
+/* Vertical layout */
+.form-row {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-top: 10px;
+}
+
+/* Input wrapper */
+.input-box {
     position: relative;
-    overflow: hidden;
+    width: 100%;
 }
 
-/* Glow hover */
-.card:hover {
-    transform: translateY(-8px) scale(1.02);
-    box-shadow: 0 0 25px rgba(0,255,200,0.6);
-}
-
-/* Shine effect */
-.card::before {
-    content: "";
-    position: absolute;
-    top: -100%;
-    left: -100%;
-    width: 200%;
-    height: 200%;
-    background: linear-gradient(120deg, transparent, rgba(255,255,255,0.2), transparent);
-    transform: rotate(25deg);
-    transition: 0.6s;
-}
-
-.card:hover::before {
-    top: 100%;
-    left: 100%;
-}
-
-/* Inputs */
-select, button {
-    width: 90%;
-    margin: 8px;
-    padding: 10px;
+/* Input */
+.input-box input {
+    width: 100%;
+    box-sizing: border-box;   /* 🔥 IMPORTANT FIX */
+    padding: 12px 40px 12px 12px;
     border-radius: 10px;
-    border: none;
+    border: 1px solid #6d28d9;
+    background: rgba(30, 10, 60, 0.8);
+    color: #f1f5f9;
+}
+
+/* Dropdown arrow */
+.dropdown-btn {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: #c4b5fd;
 }
 
 /* Button */
-button {
-    background: linear-gradient(45deg, #00c6ff, #0072ff);
-    color: white;
-    font-weight: bold;
-    cursor: pointer;
-    transition: 0.3s;
-}
-
-/* Button hover glow */
-button:hover {
-    transform: scale(1.05);
-    box-shadow: 0 0 15px #00c6ff;
-}
-
-/* Result highlight */
-#result {
-    font-size: 18px;
+.btn {
     margin-top: 10px;
-    color: #00ffcc;
+    padding: 12px 20px;
+    border-radius: 10px;
+    background: rgba(30, 10, 60, 0.9);
+    border: 1px solid #6d28d9;
+    color: #e9d5ff;
+    cursor: pointer;
+    width: fit-content;
 }
 
-/* Section text */
+.btn:hover {
+    background: #6d28d9;
+}
+
+/* Suggestions */
+.suggestions {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    background: #1a0033;
+    border-radius: 8px;
+    margin-top: 5px;
+    max-height: 150px;
+    overflow-y: auto;
+    display: none;
+    z-index: 999;
+}
+
+.suggestions div {
+    padding: 10px;
+    cursor: pointer;
+}
+
+.suggestions div:hover {
+    background: #6d28d9;
+}
+
+/* Result text */
 p {
-    font-size: 14px;
-    color: #d1d5db;
+    margin-top: 10px;
+    font-weight: 600;
+    color: #ddd6fe;
 }
