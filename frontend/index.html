@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>IPL Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<h1>🏏 IPL Advanced Dashboard</h1>
+
+<div class="container">
+
+    <!-- 🔥 MATCH PREDICTOR -->
+    <div class="card">
+        <h2>Match Predictor</h2>
+
+        <label>Team 1</label>
+        <select id="team1" onchange="syncTossWinner()"></select>
+
+        <label>Team 2</label>
+        <select id="team2" onchange="syncTossWinner()"></select>
+
+        <label>Who won the Toss?</label>
+        <select id="toss_winner"></select>
+
+        <label>Toss Decision</label>
+        <select id="toss_decision">
+            <option value="bat">Bat First</option>
+            <option value="field">Field First</option>
+        </select>
+
+        <button onclick="predict()">Predict Winner</button>
+
+        <h3 id="result">Result will appear here</h3>
+    </div>
+
+    <!-- 📊 TEAM STATS -->
+    <div class="card">
+        <h2>Team Stats</h2>
+
+        <select id="teamStats"></select>
+
+        <button onclick="getStats()">Get Stats</button>
+
+        <p id="statsResult">Stats will appear here</p>
+    </div>
+
+    <!-- ⚔️ TEAM COMPARISON -->
+    <div class="card">
+        <h2>Team Comparison</h2>
+
+        <select id="c1"></select>
+        <select id="c2"></select>
+
+        <button onclick="compare()">Compare</button>
+
+        <p id="compareResult">Comparison will appear here</p>
+    </div>
+
+</div>
+
+<script src="script.js"></script>
+
+</body>
+</html>
